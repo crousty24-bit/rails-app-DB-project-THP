@@ -1,24 +1,62 @@
-# README
+# Gossip — Social gossips & tagging app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails demo app for posting "gossips" (short posts), tagging, comments, likes and private messages. Intended as a full-stack exercise with associations and polymorphic relations.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## Overview ✨
+- Users can create gossips, comment and like (polymorphic associations)
+- Tagging system with join table
+- Private messaging between users
 
-* System dependencies
+## Schema highlights
+- Users, Gossips, Tags, Comments, Likes (polymorphic), PrivateMessages
+- Cities table for user location
 
-* Configuration
+## Tech stack 🔧
+- Ruby: `ruby-3.4.2`
+- Rails: `~> 8.0`
+- DB: `sqlite3` (development)
+- Testing: Minitest + Capybara
 
-* Database creation
+## Prerequisites ⚠️
+- Ruby 3.4.2
+- Bundler
+- Docker (optional)
 
-* Database initialization
+## Quickstart — Docker
+```bash
+cd gossip_project_app
+docker build -t gossip:dev .
+docker run --rm -p 3001:3000 gossip:dev
+# open http://localhost:3001
+```
 
-* How to run the test suite
+## Quickstart — Local
+```bash
+cd gossip_project_app
+bundle install
+bin/rails db:create db:migrate db:seed
+bin/rails server -p 3000
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Tests
+```bash
+bin/rails test
+bin/rails test:system
+```
 
-* Deployment instructions
+## Useful commands
+- Run console: `bin/rails console`
+- Reset DB: `bin/rails db:drop db:create db:migrate db:seed`
 
-* ...
+## Contributing
+- Add examples to `test/` when you add features
+- Follow RuboCop suggestions
+
+## License
+Add your license info here.
+
+---
+
+> Tip: update this README with screenshots and API examples if you expose endpoints.
