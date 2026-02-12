@@ -10,15 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_12_140619) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_12_162149) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "doctor_id", null: false
     t.integer "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "city_id"
+    t.index ["city_id"], name: "index_appointments_on_city_id"
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -28,6 +36,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_140619) do
     t.string "zip_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "city_id"
+    t.index ["city_id"], name: "index_doctors_on_city_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -35,8 +45,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_140619) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "city_id"
+    t.index ["city_id"], name: "index_patients_on_city_id"
   end
 
+  add_foreign_key "appointments", "cities"
   add_foreign_key "appointments", "doctors"
   add_foreign_key "appointments", "patients"
+  add_foreign_key "doctors", "cities"
+  add_foreign_key "patients", "cities"
 end
