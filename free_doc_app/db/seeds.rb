@@ -37,6 +37,8 @@ patients_list = []
   patient = Patient.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
+    age: Faker::Number.between(from: 1, to: 99),
+    gender: Faker::Gender.short_binary_type,
     city: cities_list.sample
   )
   patients_list << patient #save in array for Appointment Model
