@@ -1,6 +1,7 @@
 require 'faker'
+require 'colorize'
 
-puts "Cleaning DB ..."
+puts "Cleaning DB ...".colorize(:blue)
 Like.destroy_all
 Comment.destroy_all
 JoinTableGossipTag.destroy_all
@@ -11,10 +12,10 @@ User.destroy_all
 City.destroy_all
 
 puts "------------------------"
-puts "Starting seeds ..."
+puts "Starting seeds ...".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating Cities..."
+puts "Creating Cities...".colorize(:light_blue)
 cities = []
 10.times do
   city = City.create(
@@ -23,10 +24,10 @@ cities = []
   )
   cities << city
 end
-puts "Cities created: #{City.count}"
+puts "Cities created: #{City.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating Users..."
+puts "Creating Users...".colorize(:light_blue)
 users = []
 10.times do
   user = User.create(
@@ -39,10 +40,10 @@ users = []
   )
   users << user
 end
-puts "Users created: #{User.count}"
+puts "Users created: #{User.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating Gossips..."
+puts "Creating Gossips...".colorize(:light_blue)
 gossips = []
 20.times do
   gossip = Gossip.create(
@@ -52,29 +53,29 @@ gossips = []
   )
   gossips << gossip
 end
-puts "Gossips created: #{Gossip.count}"
+puts "Gossips created: #{Gossip.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating Tags..."
+puts "Creating Tags...".colorize(:light_blue)
 tags = []
 10.times do
   tag = Tag.create(title: "##{Faker::Hipster.word}")
   tags << tag
 end
-puts "Tags created: #{Tag.count}"
+puts "Tags created: #{Tag.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Assigning tags to gossips..."
+puts "Assigning tags to gossips...".colorize(:light_blue)
 gossips.each do |gossip|
   JoinTableGossipTag.create(
     gossip: gossip,
     tag: tags.sample
   )
 end
-puts "Gossips-Tags properly linked !"
+puts "Gossips-Tags properly linked !".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating private messages..."
+puts "Creating private messages...".colorize(:light_blue)
 5.times do
   sender = users.sample
   recipient = users.sample
@@ -86,10 +87,10 @@ puts "Creating private messages..."
     recipient: recipient
   )
 end
-puts "PMs created: #{PrivateMessage.count}"
+puts "PMs created: #{PrivateMessage.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating comments..."
+puts "Creating comments...".colorize(:light_blue)
 20.times do
   Comment.create(
     content: Faker::Lorem.sentence,
@@ -97,10 +98,10 @@ puts "Creating comments..."
     commentable: gossips.sample # Polymorphism: linked to gossip ; gossips are commentable
   )
 end
-puts "Comments created: #{Comment.count}"
+puts "Comments created: #{Comment.count}".colorize(:light_green)
 
 puts "------------------------"
-puts "Creating comments commenting other comments..."
+puts "Creating comments commenting other comments...".colorize(:light_blue)
 10.times do
   parent_comment = Comment.all.sample
   if parent_comment # check if comment is not empty
@@ -111,10 +112,10 @@ puts "Creating comments commenting other comments..."
     )
   end
 end
-puts "10 Sub-comments created !"
+puts "10 Sub-comments created !".colorize(:light_green)
 
 puts "------------------------"
-puts "Generating many likes..."
+puts "Generating many likes...".colorize(:light_blue)
 20.times do
   likeable_object = [Gossip.all.sample, Comment.all.sample].sample #random like to gossips/comments
   Like.create(
@@ -122,6 +123,6 @@ puts "Generating many likes..."
     likeable: likeable_object # Gossip ou Comment are likeable
   )
 end
-puts "#{Like.count} likes generated !"
+puts "#{Like.count} likes generated !".colorize(:light_green)
 puts "------------------------"
-puts "--- Seeds done ! ---"
+puts "--- Seeds done ! ---".colorize(:light_green)
