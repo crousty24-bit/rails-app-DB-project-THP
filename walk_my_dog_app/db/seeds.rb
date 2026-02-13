@@ -1,21 +1,23 @@
 require 'faker'
+require 'colorize'
 
-puts "Cleaning DB ..."
+puts "Cleaning DB ...".colorize(:blue)
 Stroll.destroy_all #destroy children bedore parents to avoid conflicts
 Dogsitter.destroy_all
 Dog.destroy_all
 City.destroy_all
 
 puts "------------------------"
-puts "Creating Cities..."
+puts "Creating Cities...".colorize(:light_blue)
 cities_list = []
 50.times do
   city = City.create(city_name: Faker::Address.city)
   cities_list << city
 end
-puts "Cities created: #{City.count}"
+puts "Cities created: #{City.count}".colorize(:light_green)
 
-puts "Creating Dogsitters..."
+puts "------------------------"
+puts "Creating Dogsitters...".colorize(:light_blue)
 100.times do
   Dogsitter.create(
     name: Faker::Name.first_name,
@@ -23,9 +25,10 @@ puts "Creating Dogsitters..."
     city: cities_list.sample
   )
 end
-puts "Dogsitters created: #{Dogsitter.count}"
+puts "Dogsitters created: #{Dogsitter.count}".colorize(:light_green)
 
-puts "Creating Dogs..."
+puts "------------------------"
+puts "Creating Dogs...".colorize(:light_blue)
 100.times do
   Dog.create(
   name: Faker::Creature::Dog.name, 
@@ -34,9 +37,10 @@ puts "Creating Dogs..."
   city: cities_list.sample
   )
 end
-puts "Dogs created: #{Dog.count}"
+puts "Dogs created: #{Dog.count}".colorize(:light_green)
 
-puts "Creating Strolls ..."
+puts "------------------------"
+puts "Creating Strolls ...".colorize(:light_blue)
 500.times do
   city_target = cities_list.sample
   if city_target.dogs.count > 0 && city_target.dogsitters.count > 0 #check if dogs&sitters are in same target city
@@ -47,4 +51,6 @@ puts "Creating Strolls ..."
     )
   end
 end
-puts "--- Seeds done ! ---"
+puts "All strolls created ! Have a good time ! ".colorize(:light_green)
+puts "------------------------"
+puts "--- Seeds done ! ---".colorize(:light_green)
