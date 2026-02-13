@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_12_172023) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_13_085747) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "doctor_id", null: false
@@ -32,12 +32,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_172023) do
   create_table "doctors", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "specialty"
     t.string "zip_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "city_id"
     t.index ["city_id"], name: "index_doctors_on_city_id"
+  end
+
+  create_table "join_table_doctor_specialties", force: :cascade do |t|
+    t.integer "doctor_id", null: false
+    t.integer "specialty_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_join_table_doctor_specialties_on_doctor_id"
+    t.index ["specialty_id"], name: "index_join_table_doctor_specialties_on_specialty_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -51,9 +59,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_12_172023) do
     t.index ["city_id"], name: "index_patients_on_city_id"
   end
 
+  create_table "specialties", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "appointments", "cities"
   add_foreign_key "appointments", "doctors"
   add_foreign_key "appointments", "patients"
   add_foreign_key "doctors", "cities"
+  add_foreign_key "join_table_doctor_specialties", "doctors"
+  add_foreign_key "join_table_doctor_specialties", "specialties"
   add_foreign_key "patients", "cities"
 end
