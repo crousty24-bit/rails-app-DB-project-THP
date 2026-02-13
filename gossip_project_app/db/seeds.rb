@@ -77,15 +77,16 @@ puts "Gossips-Tags properly linked !".colorize(:light_green)
 puts "------------------------"
 puts "Creating private messages...".colorize(:light_blue)
 5.times do
-  sender = users.sample
-  recipient = users.sample
-  # condition to check that send & recipient ARE different
-  recipient = users.sample while sender == recipient
-  PrivateMessage.create(
-    content: Faker::Lorem.sentence(word_count: 5),
-    sender: sender,
-    recipient: recipient
-  )
+  sender = User.all.sample
+  recipients = User.all.reject{|u| u == sender}.sample(rand(1..3))
+  message_content = Faker::Lorem.sentence(word_count: 5)
+  recipients.each do |recipient|
+    PrivateMessage.create(
+      content: message_content,
+      sender: sender,
+      recipient: recipient
+    )
+  end
 end
 puts "PMs created: #{PrivateMessage.count}".colorize(:light_green)
 
